@@ -1,0 +1,8 @@
+// Purpose: PowerShell with encoded/obfuscated or download-cradle patterns
+// Table: DeviceProcessEvents (needs Defender for Endpoint) | MITRE: Execution (T1059.001)
+// NOTE: in Defender advanced hunting use Timestamp instead of TimeGenerated
+DeviceProcessEvents
+| where TimeGenerated > ago(24h)
+| where FileName in~ ("powershell.exe", "pwsh.exe")
+| where ProcessCommandLine has_any ("-enc", "-encodedcommand", "FromBase64String", "Invoke-Expression", "DownloadString", "-nop", "bypass")
+| project TimeGenerated, DeviceName, AccountName, InitiatingProcessFileName, ProcessCommandLine

@@ -1,0 +1,9 @@
+// Purpose: users with many failed sign-ins from one IP (possible brute force)
+// Table: SigninLogs | MITRE: Credential Access (T1110)
+// Test: sign in to your OWN test user with a wrong password 10+ times
+SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType != 0
+| summarize Failures = count(), Apps = dcount(AppDisplayName), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by UserPrincipalName, IPAddress
+| where Failures >= 10
+| order by Failures desc

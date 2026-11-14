@@ -1,0 +1,28 @@
+id: REPLACE-WITH-NEW-GUID
+name: Azure resource deleted
+description: Detects successful delete operations in Azure Activity.
+severity: Low
+status: Available
+requiredDataConnectors:
+  - connectorId: AzureActivity
+    dataTypes: [AzureActivity]
+queryFrequency: 1h
+queryPeriod: 1h
+triggerOperator: gt
+triggerThreshold: 0
+tactics: [Impact]
+relevantTechniques: [T1485]
+query: |
+  AzureActivity
+  | where OperationNameValue endswith "DELETE"
+  | where ActivityStatusValue in ("Success", "Succeeded")
+  | project TimeGenerated, Caller, CallerIpAddress, OperationNameValue, _ResourceId
+entityMappings:
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: Caller
+  - entityType: IP
+    fieldMappings:
+      - identifier: Address
+        columnName: CallerIpAddress
