@@ -1,0 +1,30 @@
+# Create in Sentinel > Analytics > Create > Scheduled query rule and paste the values below.
+# Generate a fresh GUID for id if you export it.
+id: REPLACE-WITH-NEW-GUID
+name: Possible brute force - many failed sign-ins from one IP
+description: Detects 10+ failed sign-ins for a user from one IP within 1 hour.
+severity: Medium
+status: Available
+requiredDataConnectors:
+  - connectorId: AzureActiveDirectory
+    dataTypes: [SigninLogs]
+queryFrequency: 15m
+queryPeriod: 1h
+triggerOperator: gt
+triggerThreshold: 0
+tactics: [CredentialAccess]
+relevantTechniques: [T1110]
+query: |
+  SigninLogs
+  | where ResultType != 0
+  | summarize Failures = count() by UserPrincipalName, IPAddress
+  | where Failures >= 10
+entityMappings:
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: UserPrincipalName
+  - entityType: IP
+    fieldMappings:
+      - identifier: Address
+        columnName: IPAddress
