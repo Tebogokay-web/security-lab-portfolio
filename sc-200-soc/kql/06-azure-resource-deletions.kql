@@ -1,0 +1,9 @@
+// Purpose: successful delete operations in Azure (destructive activity)
+// Table: AzureActivity | MITRE: Impact (T1485)
+// Test: delete a throwaway resource in your lab resource group
+AzureActivity
+| where TimeGenerated > ago(24h)
+| where OperationNameValue endswith "DELETE"
+| where ActivityStatusValue in ("Success", "Succeeded")
+| project TimeGenerated, Caller, CallerIpAddress, OperationNameValue, ResourceGroup, _ResourceId
+| order by TimeGenerated desc

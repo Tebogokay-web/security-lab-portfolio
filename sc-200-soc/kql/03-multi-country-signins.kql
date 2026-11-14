@@ -1,0 +1,10 @@
+// Purpose: successful sign-ins for one user from more than one country in a day
+// (simplified impossible-travel check; real impossible travel also checks timing/distance)
+// Table: SigninLogs | MITRE: Initial Access (T1078)
+SigninLogs
+| where TimeGenerated > ago(1d)
+| where ResultType == 0
+| extend Country = tostring(LocationDetails.countryOrRegion)
+| where isnotempty(Country)
+| summarize Countries = make_set(Country), CountryCount = dcount(Country), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by UserPrincipalName
+| where CountryCount > 1
