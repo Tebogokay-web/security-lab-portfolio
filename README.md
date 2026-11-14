@@ -1,6 +1,6 @@
 # Security Lab Portfolio
 
-I'm Tebogo Molaudzi, a first-year BSc Computing student at UNISA in Secunda, South Africa. I hold two Microsoft security certifications, and I built this lab to show I can do the work behind them, not just pass the exams. I'm aiming for Junior Cloud Engineer and SOC Tier 1 roles.
+I'm Tebogo Molaudzi, a BSc Computing student at UNISA in Secunda, South Africa. I hold two Microsoft security certifications, and I built this lab to show I can do the work behind them, not just pass the exams. I'm aiming for Junior Cloud Engineer and SOC Tier 1 roles.
 
 [LinkedIn](https://www.linkedin.com/in/tebogo-molaudzi-9182372aa) · [GitHub](https://github.com/TebogoKay-web) · [Credly](https://www.credly.com/users/tebogo-molaudzi) · [Microsoft Learn profile](https://learn.microsoft.com/en-us/users/TebogoMolaudzi-1316)
 
