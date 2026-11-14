@@ -1,19 +1,26 @@
 # SC-200: SOC work in Microsoft Sentinel
 
-## Lab setup
-1. Create resource group `rg-seclab` and a Log Analytics workspace (daily cap on).
-2. Add Microsoft Sentinel to the workspace.
-3. Connect data sources: **Microsoft Entra ID** (Sign-in logs, Audit logs) and **Azure Activity**. Add Defender for Endpoint / XDR tables only if your tenant has them.
-4. Run queries in **Sentinel > Logs**. Save them and screenshot results into `screenshots/`.
+This folder is my hands-on practice for the Security Operations Analyst Associate (SC-200): collecting logs, hunting with KQL, building detections and writing up incidents.
+
+## My setup
+- Windows 10 VM, `vm-target-server`, as the machine being "attacked"
+- Log Analytics workspace `log-analytics-telemetry` with Microsoft Sentinel
+- Windows Security Events via AMA, using a data collection rule scoped to the VM (Common events)
+
+## What I've done so far
+- Generated 12 failed logons against a fake account from inside my own VM
+- Confirmed Windows logged them, and that they reached Sentinel
+- Ran a KQL query that groups failed logons (Event 4625) by account, IP and logon type. Result: 13 failures for the fake user, logon type 3. (The 13th was from an earlier test run.)
+- Screenshot: `screenshots/` (add yours here once cropped)
 
 ## Contents
-| Folder | What it holds |
-|---|---|
-| `kql/` | 8 hunting/detection queries (each with purpose, table, MITRE tactic, how to test) |
-| `analytic-rules/` | Rule definitions you can create in Sentinel |
-| `incident-reports/` | Incident report template + where to put your finished ones |
-| `playbooks/` | Automated response plan |
+| Folder | What it holds | Status |
+|---|---|---|
+| `kql/` | Hunting and detection queries | Windows-based ones tested; Entra ones not yet (no tenant access) |
+| `analytic-rules/` | Rule definitions for Sentinel | Brute-force rule being deployed |
+| `incident-reports/` | My write-ups, plus a template | First report in progress |
+| `playbooks/` | Automated response plan | Not started |
 
-## Notes
-- Some queries need data you may not have (e.g. `DeviceProcessEvents` needs Defender for Endpoint). If a table is missing, mark it as "not tested" instead of pretending.
-- Table and column names can change. Check the schema in the Logs blade if a query errors.
+## Notes to myself
+- Some queries need data I don't have yet (Entra sign-in logs, Defender for Endpoint tables). I leave them marked "not tested" instead of guessing.
+- Microsoft is moving Sentinel management into the Defender portal. My university account can't open it, so I deploy rules as code from the Azure portal and read results in the Logs blade.

@@ -1,18 +1,13 @@
-# AWS security monitoring (optional bonus)
+# AWS security monitoring (optional)
 
-Many SOC job ads ask for cloud monitoring on more than one provider (for example CloudTrail, GuardDuty and IAM on AWS). A small AWS lab shows that you can do it on both.
+Many SOC job ads ask for monitoring on more than one cloud, so I plan a small AWS lab after the Azure work is solid.
 
-## Safe-cost rules
-1. Create an AWS Budget with email alerts first.
-2. Check what your plan or credits actually cover before enabling services.
-3. Delete resources when done.
+## Plan
+- [ ] IAM with least privilege and MFA on the root account
+- [ ] CloudTrail management events to a private S3 bucket
+- [ ] GuardDuty for a short test period
+- [ ] Three questions I can answer from CloudTrail (who deleted something, who changed IAM, failed console logins)
+- [ ] Match each question to the equivalent Sentinel query
+- [ ] Clean up and note the cost
 
-## Mini lab
-- [ ] Create an IAM user/role with least privilege (no root keys, MFA on the root account)
-- [ ] Turn on CloudTrail (management events) to an S3 bucket with public access blocked
-- [ ] Enable GuardDuty for a short test period and review findings
-- [ ] Write 3 questions you can answer from CloudTrail logs (who deleted a resource, who changed IAM, failed console logins)
-- [ ] Compare: which Sentinel query matches each CloudTrail question?
-- [ ] Clean up resources and note the cost
-
-Write findings in `findings.md` with screenshots.
+I set an AWS budget alert before creating anything, and delete resources when I finish.
